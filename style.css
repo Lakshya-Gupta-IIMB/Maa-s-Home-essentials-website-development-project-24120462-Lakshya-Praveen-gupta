@@ -1,0 +1,275 @@
+<style>
+  /* Reset and base styles */
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+
+  body {
+    background-color: #fff9f5;
+    color: #333;
+    line-height: 1.6;
+  }
+
+  header {
+    background: linear-gradient(to right, #ff5f6d, #ffc371);
+    color: white;
+    text-align: center;
+    padding: 3rem 1rem 2rem;
+    border-radius: 0 0 30px 30px;
+  }
+
+  header h1 {
+    font-size: 2.8rem;
+    margin-bottom: 0.5rem;
+    letter-spacing: 1px;
+  }
+
+  header p {
+    font-size: 1.2rem;
+    font-weight: 500;
+  }
+
+  nav {
+    background-color: #ffffff;
+    display: flex;
+    justify-content: center;
+    padding: 1rem;
+    gap: 2rem;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    border-bottom: 2px solid #ffe3d1;
+  }
+
+  nav a {
+    color: #ff5f6d;
+    font-weight: bold;
+    text-decoration: none;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+  }
+
+  nav a:hover {
+    color: #ff8c42;
+    text-decoration: underline;
+  }
+
+  section {
+    padding: 3rem 1rem;
+    max-width: 1000px;
+    margin: auto;
+  }
+
+  #hero {
+    background-color: #fff3e6;
+    border: 2px dashed #ffd2a5;
+    text-align: center;
+    border-radius: 16px;
+    padding: 2rem;
+    margin-top: 2rem;
+  }
+
+  #hero h2 {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+    color: #ff5f6d;
+  }
+
+  #hero p {
+    font-size: 1.1rem;
+    color: #555;
+  }
+
+  h2 {
+    color: #ff5f6d;
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+    border-left: 5px solid #ffc371;
+    padding-left: 10px;
+  }
+
+  h3 {
+    margin-top: 1rem;
+    color: #ff8c42;
+    font-size: 1.2rem;
+  }
+
+  p {
+    margin-bottom: 1rem;
+    font-size: 1rem;
+    color: #444;
+  }
+
+  blockquote {
+    background: #ffe7d0;
+    border-left: 5px solid #ff8c42;
+    margin: 1rem 0;
+    padding: 1rem;
+    font-style: italic;
+    border-radius: 10px;
+    color: #333;
+  }
+
+  footer {
+    background-color: #ff5f6d;
+    color: white;
+    text-align: center;
+    padding: 2rem 1rem;
+    margin-top: 2rem;
+    font-size: 0.9rem;
+    border-radius: 20px 20px 0 0;
+  }
+
+  /* Mobile Responsive */
+  @media screen and (max-width: 768px) {
+    header h1 {
+      font-size: 2rem;
+    }
+
+    nav {
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    section {
+      padding: 2rem 1rem;
+    }
+
+    #hero {
+      margin: 1rem;
+    }
+  }
+  .product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 2rem;
+    margin-top: 1.5rem;
+  }
+  
+  .product-card {
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.07);
+    padding: 1rem;
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .product-card:hover {
+    transform: scale(1.03);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+  }
+  
+  .product-card img {
+    max-width: 100%;
+    border-radius: 10px;
+    margin-bottom: 0.75rem;
+    height: 180px;
+    object-fit: cover;
+  }
+  #contact {
+    background-color: #f0fff5;
+    border-radius: 12px;
+    padding: 2rem;
+    text-align: center;
+    margin-top: 2rem;
+    box-shadow: 0 4px 10px rgba(0, 128, 0, 0.05);
+  }
+  
+  #contact h2 {
+    color: #25D366;
+    font-size: 1.8rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  #contact p {
+    margin-bottom: 1rem;
+    font-size: 1rem;
+  }
+  
+  .whatsapp-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background-color: #25D366;
+    color: white;
+    font-weight: bold;
+    padding: 0.75rem 1.25rem;
+    border-radius: 40px;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+  }
+  
+  .whatsapp-button:hover {
+    background-color: #1ebe57;
+  }
+    /* ---------- Responsive Design: Smartphones ---------- */
+@media (max-width: 768px) {
+
+    header h1 {
+      font-size: 1.8rem;
+    }
+  
+    header p,
+    .hero p {
+      font-size: 1rem;
+    }
+  
+    nav {
+      flex-direction: column;
+      gap: 0.8rem;
+      padding: 1rem 0;
+    }
+  
+    .hero {
+      padding: 4rem 1rem;
+      text-align: center;
+    }
+  
+    .hero h1 {
+      font-size: 2rem;
+    }
+  
+    .section {
+      padding: 2rem 1rem;
+    }
+  
+    .products {
+      grid-template-columns: 1fr;
+      gap: 1.2rem;
+    }
+  
+    .product-card {
+      padding: 1rem;
+    }
+  
+    .product-card h3 {
+      font-size: 1.1rem;
+    }
+  
+    .product-card p {
+      font-size: 0.95rem;
+    }
+  
+    .contact h2 {
+      font-size: 1.6rem;
+    }
+  
+    .whatsapp-button {
+      font-size: 0.95rem;
+      padding: 0.6rem 1.2rem;
+    }
+  
+    footer {
+      padding: 1.5rem 1rem;
+      font-size: 0.85rem;
+    }
+  }
+  html {
+    scroll-behavior: smooth;
+  }
+  
+</style>

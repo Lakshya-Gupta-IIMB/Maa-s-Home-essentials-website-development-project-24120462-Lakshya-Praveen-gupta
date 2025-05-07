@@ -1,0 +1,420 @@
+$(document).ready(function () {   
+    
+    $('body').on('change','#candidatequalificationdetailstbl-tenthpassstatus', function() {
+       
+        var pass = $('#candidatequalificationdetailstbl-tenthpassstatus :selected').val();   
+        if(pass==1)
+        {
+        $('#hideMode').show();
+        $('#candidatequalificationdetailstbl-tenthyearofpassing').html('');
+         
+        } else if(!pass) {
+            $('#candidatequalificationdetailstbl-tenthyearofpassing').html('');            
+            $('#candidatequalificationdetailstbl-tenthyearofpassing').html('<option value="">--Select--</option>');
+            $("#candidatequalificationdetailstbl-twelthpassigstatus").val("");
+            $('#candidatequalificationdetailstbl-twelthyearofpassing').html('<option value="">--Select--</option>');
+            $("#candidatequalificationdetailstbl-graduationpassigstatus").val("");
+            $('#candidatequalificationdetailstbl-graduationyearofpassing').html('<option value="">--Select--</option>');
+           
+           }
+           else {
+           $('#hideMode').hide();
+           $('#candidatequalificationdetailstbl-tenthyearofpassing').html('');           
+           }
+      
+        $.ajax({
+            url: "application/passyeartenth",
+            type: 'post',
+            data: {pass:pass},
+            success: function (data) {
+              if(!$.trim(data).length) { // zero-length string AFTER a trim
+                 return false;
+              }
+               var totaldata=JSON.parse(data);
+               if(pass==1){
+
+                var i=0;
+              
+                $('#candidatequalificationdetailstbl-tenthyearofpassing').append('<option value="">--Select--</option>');
+                $.each(totaldata, function(key, value){
+                    
+                    $('#candidatequalificationdetailstbl-tenthyearofpassing').append('<option value=' + totaldata[i]+ '>' + totaldata[i] + '</option>');
+                    i++;
+                });
+                
+               
+             }
+            else{
+                var i=0;
+               
+                $('#candidatequalificationdetailstbl-tenthyearofpassing').append('<option value="">--Select--</option>');
+                $.each(totaldata, function(key, value){
+                    
+                    $('#candidatequalificationdetailstbl-tenthyearofpassing').append('<option value=' + totaldata[i]+ '>' + totaldata[i] + '</option>');
+                   
+                    i++;
+                });
+             }
+
+            }
+       });
+
+
+    });
+
+     
+      /* Add Percent Calculation  and CGPA here */ 
+      $('body').on('change','#TenthResultMode', function() {
+        var Percent = $('#TenthResultMode :selected').val();
+       
+        if(Percent!='')
+        {
+            if(Percent==1)
+            {
+              $('#changeMark').text('Marks(%)');
+            }
+            else {
+              $('#changeMark').text('Marks(CGPA)');
+            }
+
+          $('#thentpercentage').show();
+        }else {
+            $('#thentpercentage').hide();
+
+        }
+    });
+
+
+    /* Add other University here */ 
+    $('body').on('change','#candidatequalificationdetailstbl-tenthuniversityboardid', function() {
+        var otheruniver = $('#candidatequalificationdetailstbl-tenthuniversityboardid :selected').val(); 
+        if(otheruniver==10)
+        {
+          $('#otherUni').show();
+        }else{
+            $('#otherUni').hide();
+
+        }
+    });
+
+    
+
+    /****** 12th pass Exam details ******/  
+
+
+
+    $('body').on('change','#candidatequalificationdetailstbl-twelthpassigstatus', function() {
+       
+        var pass = $('#candidatequalificationdetailstbl-twelthpassigstatus :selected').val();
+        var tenPassYear = $.trim($('#candidatequalificationdetailstbl-tenthyearofpassing :selected').val());   
+        if(tenPassYear =='' || tenPassYear == null || tenPassYear == 'undefined'){
+          $("#candidatequalificationdetailstbl-tenthyearofpassing").addClass("is-invalid").attr("aria-invalid", true);
+          $("#candidatequalificationdetailstbl-tenthyearofpassing").next(".invalid-feedback").html('Please select the 10 passed year').show();
+          $("#candidatequalificationdetailstbl-tenthyearofpassing").focus();
+          $("#candidatequalificationdetailstbl-twelthpassigstatus").val("");
+          return false;
+        } 
+        if(pass==1 && tenPassYear!='')
+        {
+        $('#hideMode').show();
+        $('#candidatequalificationdetailstbl-twelthyearofpassing').html('');
+         
+        } else if(!pass) {
+            $('#candidatequalificationdetailstbl-twelthyearofpassing').html('');            
+            $('#candidatequalificationdetailstbl-twelthyearofpassing').html('<option value="">--Select--</option>');
+            $("#candidatequalificationdetailstbl-graduationpassigstatus").val("");
+            $('#candidatequalificationdetailstbl-graduationyearofpassing').html('<option value="">--Select--</option>');
+            }
+           else {
+           $('#hideMode').hide();
+           $('#candidatequalificationdetailstbl-twelthyearofpassing').html('');           
+           }
+      
+        $.ajax({
+            url: "application/passyeartwelth",
+            type: 'post',
+            data: {pass:pass,tenPassYear:tenPassYear},
+            success: function (data) { 
+              if(!$.trim(data).length) { // zero-length string AFTER a trim
+                return false;
+             }           
+               var totaldata=JSON.parse(data);
+               if(pass==1){
+                var i=0;              
+                $('#candidatequalificationdetailstbl-twelthyearofpassing').append('<option value="">--Select--</option>');
+                $.each(totaldata, function(key, value){
+                    
+                    $('#candidatequalificationdetailstbl-twelthyearofpassing').append('<option value="' + totaldata[i]+ '">' + totaldata[i] + '</option>');
+                    i++;
+                });
+                
+               
+             }
+            else{
+                var i=0;               
+                $('#candidatequalificationdetailstbl-twelthyearofpassing').append('<option value="">--Select--</option>');
+                $.each(totaldata, function(key, value){                    
+                    $('#candidatequalificationdetailstbl-twelthyearofpassing').append('<option value="' + totaldata[i]+ '">' + totaldata[i] + '</option>');
+                    i++;
+                });
+             }
+            }
+       });
+    });
+
+
+      /* Add Percent Calculation  and CGPA here */ 
+      $('body').on('change','#TwelthResultMode', function() {
+        var Percent = $('#TwelthResultMode :selected').val(); 
+        if(Percent!='')
+        {
+            if(Percent==1)
+            {
+              $('#TwelthchangeMark').text('Marks(%)');
+            }
+            else {
+              $('#TwelthchangeMark').text('Marks(CGPA)');
+            }
+
+          $('#twelthpercentage').show();
+        }else {
+            $('#twelthpercentage').hide();
+
+        }
+    });
+
+        /* Add other Tewelth University here */ 
+        $('body').on('change','#candidatequalificationdetailstbl-twelthuniversityboardid', function() {
+            var twelthotheruniver = $('#candidatequalificationdetailstbl-twelthuniversityboardid :selected').val(); 
+            if(twelthotheruniver==11)
+            {
+              $('#TwelthOtherUni').show();
+            }else{
+                $('#TwelthOtherUni').hide();
+    
+            }
+        });
+
+        /****** Gradutaion  pass Exam details ******/  
+
+
+
+        $('body').on('change','#candidatequalificationdetailstbl-graduationpassigstatus', function() {
+       
+            var pass = $('#candidatequalificationdetailstbl-graduationpassigstatus :selected').val();
+            //var tenPassYear = $('#candidatequalificationdetailstbl-tenthyearofpassing :selected').val();
+            var TwelthPassYear = $('#candidatequalificationdetailstbl-twelthyearofpassing :selected').val(); 
+            if(TwelthPassYear =='' || TwelthPassYear == null || TwelthPassYear == 'undefined'){
+              $("#candidatequalificationdetailstbl-twelthyearofpassing").addClass("is-invalid").attr("aria-invalid", true);
+              $("#candidatequalificationdetailstbl-twelthyearofpassing").next(".invalid-feedback").html('Please select the 12 passed year').show();
+              $("#candidatequalificationdetailstbl-twelthyearofpassing").focus();
+              $("#candidatequalificationdetailstbl-graduationpassigstatus").val("");
+              return false;
+            }  
+            if(pass==1 && TwelthPassYear!='')
+            {
+            $('#hideMode').show();
+            $('#candidatequalificationdetailstbl-graduationyearofpassing').html('');
+             
+            } else if(!pass) {
+                $('#candidatequalificationdetailstbl-graduationyearofpassing').html('');            
+                $('#candidatequalificationdetailstbl-graduationyearofpassing').html('<option value="">--Select--</option>');
+                }
+               else {
+               $('#hideMode').hide();
+               $('#candidatequalificationdetailstbl-graduationyearofpassing').html('');           
+               }
+          
+            $.ajax({
+                url: "application/passyear",
+                type: 'post',
+                data: {pass:pass,TwelthPassYear:TwelthPassYear},
+                success: function (data) {
+                  if(!$.trim(data).length) { // zero-length string AFTER a trim
+                    return false;
+                 }                  
+                   var totaldata=JSON.parse(data);
+                   if(pass==1){
+                    var i=0;              
+                    $('#candidatequalificationdetailstbl-graduationyearofpassing').append('<option value="">--Select--</option>');
+                    $.each(totaldata, function(key, value){
+                        
+                        $('#candidatequalificationdetailstbl-graduationyearofpassing').append('<option value="' + totaldata[i]+ '">' + totaldata[i] + '</option>');
+                        i++;
+                    });
+                    
+                   
+                 }
+                else{
+                    var i=0;               
+                    $('#candidatequalificationdetailstbl-graduationyearofpassing').append('<option value="">--Select--</option>');
+                    $.each(totaldata, function(key, value){                    
+                        $('#candidatequalificationdetailstbl-graduationyearofpassing').append('<option value="' + totaldata[i]+ '">' + totaldata[i] + '</option>');
+                        i++;
+                    });
+                 }
+                }
+           });
+        });
+    
+
+    /* Add Percent Calculation  and CGPA here */ 
+      $('body').on('change','#GraduationResultMode', function() {
+        var Percent = $('#GraduationResultMode :selected').val(); 
+        if(Percent!='')
+        {
+            if(Percent==1)
+            {
+              $('#GraduationchangeMark').text('Marks(%)');
+            }
+            else {
+              $('#GraduationchangeMark').text('Marks(CGPA)');
+            }
+
+          $('#Graduationpercentage').show();
+        }else {
+            $('#Graduationpercentage').hide();
+
+        }
+    });
+
+    /* Add other Tewelth University here */ 
+         $('body').on('change','#candidatequalificationdetailstbl-graduationuniversityboardid', function() {
+            var twelthotheruniver = $('#candidatequalificationdetailstbl-graduationuniversityboardid :selected').val(); 
+            if(twelthotheruniver==4)
+            {
+              $('#GraduationOtherUni').show();
+            }else{
+                $('#GraduationOtherUni').hide();
+    
+            }
+        });
+
+
+         /* Add other Exam text here */ 
+         $('body').on('change','#candidatequalificationdetailstbl-graduationexammstid', function() {
+          var graduationexammstid = $('#candidatequalificationdetailstbl-graduationexammstid :selected').val(); 
+          if(graduationexammstid==1004)
+          {
+            $('#GraduationOtherExamUni').show();
+          }else{
+              $('#GraduationOtherExamUni').hide();
+  
+          }
+      });
+
+
+      $('body').on('change','#candidatequalificationdetailstbl-tenthyearofpassing', function() {
+       
+        var pass = $('#candidatequalificationdetailstbl-tenthyearofpassing :selected').val();
+         if(!pass || pass) {
+            $("#candidatequalificationdetailstbl-twelthpassigstatus").val("");
+            $('#candidatequalificationdetailstbl-twelthyearofpassing').html('');            
+            $('#candidatequalificationdetailstbl-twelthyearofpassing').html('<option value="">--Select--</option>');
+            $("#candidatequalificationdetailstbl-graduationpassigstatus").val("");
+            $('#candidatequalificationdetailstbl-graduationyearofpassing').html('');
+            $('#candidatequalificationdetailstbl-graduationyearofpassing').html('<option value="">--Select--</option>');
+            }
+           else {
+           $('#hideMode').hide();
+           $('#candidatequalificationdetailstbl-twelthyearofpassing').html('');           
+           }
+          });
+          $('body').on('change','#candidatequalificationdetailstbl-twelthyearofpassing', function() {
+       
+            var pass = $('#candidatequalificationdetailstbl-twelthyearofpassing :selected').val();
+             if(!pass || pass) {
+                $("#candidatequalificationdetailstbl-graduationpassigstatus").val("");
+                ///$('#candidatequalificationdetailstbl-graduationyearofpassing').html('');
+                $('#candidatequalificationdetailstbl-graduationyearofpassing').html('<option value="">--Select--</option>');
+                }
+               else {
+               $('#hideMode').hide();
+               //$('#candidatequalificationdetailstbl-twelthyearofpassing').html('');           
+               }
+              });
+
+              $('body').on('focusout','#TenthRollNumber', function() {
+                if($("#TwelthRollNumber").hasClass("is-invalid")){
+                  $("#TwelthRollNumber").removeClass("is-invalid")
+                  $("#TwelthRollNumber").addClass("is-valid").attr("aria-invalid", false);
+                  $("#TwelthRollNumber").next(".invalid-feedback").html('')
+                }
+                if($("#GraduationRollNumber").hasClass("is-invalid")){
+                  $("#GraduationRollNumber").removeClass("is-invalid")
+                  $("#GraduationRollNumber").addClass("is-valid").attr("aria-invalid", false);
+                  $("#GraduationRollNumber").next(".invalid-feedback").html('')
+                }
+                if($("#TwelthRollNumber").val()!='' && $("#TenthRollNumber").val() !='' && $("#TwelthRollNumber").val() == $("#TenthRollNumber").val()){
+                    $("#TwelthRollNumber").addClass("is-invalid").attr("aria-invalid", true);
+                    $("#TwelthRollNumber").next(".invalid-feedback").html('10 th Rollnumber and 12 th Rollnumber should not be same.').show();
+
+                }
+                if($("#TwelthRollNumber").val()!='' && $("#GraduationRollNumber").val() !='' && $("#TwelthRollNumber").val() == $("#GraduationRollNumber").val()){
+                  $("#TwelthRollNumber").addClass("is-invalid").attr("aria-invalid", true);
+                  $("#TwelthRollNumber").next(".invalid-feedback").html('Graduation Rollnumber and 12 th Rollnumber should not be same.').show();
+
+                }
+                if($("#GraduationRollNumber").val()!='' && $("#TenthRollNumber").val() !='' && $("#GraduationRollNumber").val() == $("#TenthRollNumber").val()){
+                  $("#GraduationRollNumber").addClass("is-invalid").attr("aria-invalid", true);
+                  $("#GraduationRollNumber").next(".invalid-feedback").html('10 th Rollnumber and Graduation Rollnumber should not be same.').show();
+                 }
+              });
+
+              $('body').on('focusout','#TwelthRollNumber', function() {
+                if($("#TenthRollNumber").hasClass("is-invalid")){
+                  $("#TenthRollNumber").removeClass("is-invalid")
+                  $("#TenthRollNumber").addClass("is-valid").attr("aria-invalid", false);
+                  $("#TenthRollNumber").next(".invalid-feedback").html('')
+                }
+                if($("#GraduationRollNumber").hasClass("is-invalid")){
+                  $("#GraduationRollNumber").removeClass("is-invalid")
+                  $("#GraduationRollNumber").addClass("is-valid").attr("aria-invalid", false);
+                  $("#GraduationRollNumber").next(".invalid-feedback").html('')
+                }
+                if($("#TwelthRollNumber").val()!='' && $("#TenthRollNumber").val() !='' && $("#TwelthRollNumber").val() == $("#TenthRollNumber").val()){
+                  $("#TenthRollNumber").addClass("is-invalid").attr("aria-invalid", true);
+                  $("#TenthRollNumber").next(".invalid-feedback").html('12 th Rollnumber and 10 th Rollnumber should not be same.').show();
+                  }
+                  if($("#GraduationRollNumber").val()!='' && $("#TenthRollNumber").val() !='' && $("#GraduationRollNumber").val() == $("#TenthRollNumber").val()){
+                    $("#TenthRollNumber").addClass("is-invalid").attr("aria-invalid", true);
+                    $("#TenthRollNumber").next(".invalid-feedback").html('Graduation Rollnumber and 10 th Rollnumber should not be same.').show();
+                    }
+              if($("#GraduationRollNumber").val()!='' && $("#TwelthRollNumber").val() !='' && $("#GraduationRollNumber").val() == $("#TwelthRollNumber").val()){
+                $("#GraduationRollNumber").addClass("is-invalid").attr("aria-invalid", true);
+                $("#GraduationRollNumber").next(".invalid-feedback").html('10 th Rollnumber and Graduation Rollnumber should not be same.').show();
+               }
+              });
+                $('body').on('focusout','#GraduationRollNumber', function() {
+                  if($("#TenthRollNumber").hasClass("is-invalid")){
+                    $("#TenthRollNumber").removeClass("is-invalid")
+                    $("#TenthRollNumber").addClass("is-valid").attr("aria-invalid", false);
+                    $("#TenthRollNumber").next(".invalid-feedback").html('')
+                  }
+                  if($("#TwelthRollNumber").hasClass("is-invalid")){
+                    $("#TwelthRollNumber").removeClass("is-invalid")
+                    $("#TwelthRollNumber").addClass("is-valid").attr("aria-invalid", false);
+                    $("#TwelthRollNumber").next(".invalid-feedback").html('')
+                  }
+                  if($("#GraduationRollNumber").val()!='' && $("#TenthRollNumber").val() !='' && $("#GraduationRollNumber").val() == $("#TenthRollNumber").val()){
+                    $("#TenthRollNumber").addClass("is-invalid").attr("aria-invalid", true);
+                    $("#TenthRollNumber").next(".invalid-feedback").html('Graduation Rollnumber and 10 th Rollnumber should not be same.').show();
+                    }
+                    if($("#TwelthRollNumber").val()!='' && $("#TenthRollNumber").val() !='' && $("#TwelthRollNumber").val() == $("#TenthRollNumber").val()){
+                      $("#TenthRollNumber").addClass("is-invalid").attr("aria-invalid", true);
+                      $("#TenthRollNumber").next(".invalid-feedback").html('12 th Rollnumber and 10 th Rollnumber should not be same.').show();
+                      }
+                if($("#GraduationRollNumber").val()!='' && $("#TwelthRollNumber").val() !='' && $("#GraduationRollNumber").val() == $("#TwelthRollNumber").val()){
+                  $("#TwelthRollNumber").addClass("is-invalid").attr("aria-invalid", true);
+                  $("#TwelthRollNumber").next(".invalid-feedback").html('12th Rollnumber and Graduation Rollnumber should not be same.').show();
+                 }
+
+              });
+      
+        
+
+}); 
+
+
+
+   

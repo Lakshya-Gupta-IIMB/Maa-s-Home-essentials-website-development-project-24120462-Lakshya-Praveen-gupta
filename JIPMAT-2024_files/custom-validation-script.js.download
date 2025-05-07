@@ -1,0 +1,156 @@
+/******** ONly Leter no space and no special character **********/
+
+function lettersOnly() 
+{
+            var charCode = event.keyCode;
+
+            if ((charCode > 64 && charCode < 91) || (charCode > 96 && charCode < 123) || charCode == 8 || charCode == 32)
+
+                return true;
+            else
+                return false;
+}
+
+function numericaOnly() 
+{
+            var charCode = event.keyCode;
+
+            if ((charCode > 47 && charCode < 58) || charCode == 8)
+
+                return true;
+            else
+                return false;
+}
+
+/* Remove Dubal space bar */ 
+
+function isWhiteSpace(char) {
+    return (/\s/).test(char);
+  }
+  function willCreateWhitespaceSequence(evt) {
+    var willCreateWSS = false;
+    if (isWhiteSpace(evt.key)) {
+    
+      var elmInput = evt.currentTarget;
+      var content = elmInput.value;
+  
+      var posStart = elmInput.selectionStart;
+      var posEnd = elmInput.selectionEnd;
+  
+      willCreateWSS = (
+           isWhiteSpace(content[posStart - 1] || '')
+        || isWhiteSpace(content[posEnd] || '')
+      );
+    }
+    return willCreateWSS;
+  }
+  
+  function isAlfa(evt) {
+  
+    evt = (evt || window.event);
+    var charCode = (evt.which || evt.keyCode);
+  
+    return ((
+         (charCode > 32)
+      && (charCode < 65 || charCode > 90)
+      && (charCode < 97 || charCode > 122)
+  
+    ) || willCreateWhitespaceSequence(evt)) ? false : true;
+  }
+  
+  function isAlfaNumeric(evt) {
+  
+    evt = (evt || window.event);
+    var charCode = (evt.which || evt.keyCode);
+    return ((
+      (charCode < 48 && charCode > 32 )    
+      || (charCode > 57 && charCode < 65)
+      || (charCode > 90 && charCode < 97) 
+      || (charCode > 122 && charCode < 127)
+      && (charCode > 65 || charCode < 91) 
+      && (charCode < 97 || charCode > 122)    
+  
+    ) || willCreateWhitespaceSequence(evt)) ? false : true;
+  }
+
+
+  function isAlfaNumericwsc(evt) {
+
+    evt = (evt || window.event);
+    var charCode = (evt.which || evt.keyCode);
+    return ((
+      (charCode < 44 && charCode > 32 )    
+      || (charCode > 57 && charCode < 65)
+      || (charCode > 90 && charCode < 97) 
+      || (charCode > 122 && charCode < 127)
+      && (charCode > 65 || charCode < 91) 
+      && (charCode < 97 || charCode > 122)   
+  
+    ) || willCreateWhitespaceSequence(evt)) ? false : true;
+  
+  }
+
+
+/* Date of birth Reset if any select feb month 31st */ 
+function lastdayofmonth() {
+  var Year = $("#Year :selected").val();
+  var Month = $("#Month :selected").val();
+  var date_time = new Date((new Date(Year, Month, 1)) - 1)
+  convert(date_time)
+
+
+  function convert(str) {
+    var date = new Date(str);
+    var mnth = ("0" + (date.getMonth() + 1)).slice(-2);
+    var day = ("0" + date.getDate()).slice(-2);
+    $("#Day option").attr("disabled", false);
+    console.log(day)
+    if ($("#Day :selected").val() > day) {
+        for (var i = 31; i > day; i--) {
+            $("#Day option:contains('" + i + "')").attr("disabled", "disabled");
+        }
+    }
+    return day;
+  }
+  
+
+  /* Make it blank*/ 
+  $("#Month").change(function (event) {
+  
+    var month = $(this).val();
+    var day = $("#Day").val();
+    
+    if(month=="02" && (day>28 || day==null)){
+        $("#Day").val("");
+        $('.Day').val(''); 
+    }
+});
+$("#Day").change(function (event) {
+    var day = $(this).val();
+    var month = $("#Month").val();
+    if(month=="02" && day>28){
+        $("#Day").val("");
+    }
+});
+
+}
+
+
+
+$('#registration-form .form-control').on('keyup', function(e) {
+  var id = $(this).attr('id');
+  $("#" + id).addClass("is-invalid").prop('aria-invalid', true);
+});
+
+$('#registration-form .form-control').on('keydown', function(e) {
+  var input = $(this).attr('id');
+  var input = e.target;
+  var val = input.value;
+  var end = input.selectionEnd;
+  if (e.keyCode == 32 && (val[end - 1] == " " || val[end] == " ")) {
+      e.preventDefault();
+      return false;
+  }
+});
+  
+ 
